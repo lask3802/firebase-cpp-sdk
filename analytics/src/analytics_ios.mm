@@ -293,12 +293,14 @@ Future<std::string> GetAnalyticsInstanceIdLastResult() {
       internal::FutureData::Get()->api()->LastResult(internal::kAnalyticsFnGetAnalyticsInstanceId));
 }
 
-Future<int64_t> GetSessionId() {
+Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE> GetSessionId() {
   MutexLock lock(g_mutex);
-  FIREBASE_ASSERT_RETURN(Future<int64_t>(), internal::IsInitialized());
+  FIREBASE_ASSERT_RETURN(Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE>(), internal::IsInitialized());
   auto* api = internal::FutureData::Get()->api();
-  const auto future_handle = api->SafeAlloc<int64_t>(internal::kAnalyticsFnGetSessionId);
-  [FIRAnalytics sessionIDWithCompletion:^(int64_t session_id, NSError* _Nullable error) {
+  const auto future_handle =
+      api->SafeAlloc<FIREBASE_ANALYTICS_SESSION_ID_TYPE>(internal::kAnalyticsFnGetSessionId);
+  [FIRAnalytics sessionIDWithCompletion:^(FIREBASE_ANALYTICS_SESSION_ID_TYPE session_id,
+                                          NSError* _Nullable error) {
     MutexLock lock(g_mutex);
     if (!internal::IsInitialized()) return;
     if (error) {
@@ -307,13 +309,13 @@ Future<int64_t> GetSessionId() {
       api->CompleteWithResult(future_handle, 0, "", session_id);
     }
   }];
-  return MakeFuture<int64_t>(api, future_handle);
+  return MakeFuture<FIREBASE_ANALYTICS_SESSION_ID_TYPE>(api, future_handle);
 }
 
-Future<int64_t> GetSessionIdLastResult() {
+Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE> GetSessionIdLastResult() {
   MutexLock lock(g_mutex);
-  FIREBASE_ASSERT_RETURN(Future<int64_t>(), internal::IsInitialized());
-  return static_cast<const Future<int64_t>&>(
+  FIREBASE_ASSERT_RETURN(Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE>(), internal::IsInitialized());
+  return static_cast<const Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE>&>(
       internal::FutureData::Get()->api()->LastResult(internal::kAnalyticsFnGetSessionId));
 }
 

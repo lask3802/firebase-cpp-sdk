@@ -527,21 +527,27 @@ Future<std::string> GetAnalyticsInstanceId();
 /// @returns Object which can be used to retrieve the analytics instance ID.
 Future<std::string> GetAnalyticsInstanceIdLastResult();
 
+#ifndef SWIG
+#define FIREBASE_ANALYTICS_SESSION_ID_TYPE int64_t
+#else  // SWIG
+#define FIREBASE_ANALYTICS_SESSION_ID_TYPE long long
+#endif
+
 /// Asynchronously retrieves the identifier of the current app
 /// session.
 ///
 /// The session ID retrieval could fail due to Analytics collection
 /// disabled, or if the app session was expired.
 ///
-/// @returns The identifier of the current app session. The value is 0 if the
-/// request failed.
-Future<int64_t> GetSessionId();
+/// @returns The identifier of the current app session, a 64-bit integer.
+///          The value is 0 if the request failed.
+Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE> GetSessionId();
 
 /// Get the result of the most recent GetSessionId() call.
 ///
-/// @returns The identifier of the current app session. The value is 0 if the
-/// request failed.
-Future<int64_t> GetSessionIdLastResult();
+/// @returns The identifier of the current app session, a 64-bit integer.
+///          The value is 0 if the request failed.
+Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE> GetSessionIdLastResult();
 
 }  // namespace analytics
 }  // namespace firebase

@@ -381,11 +381,12 @@ Future<std::string> GetAnalyticsInstanceIdLastResult() {
           internal::kAnalyticsFnGetAnalyticsInstanceId));
 }
 
-Future<int64_t> GetSessionId() {
-  FIREBASE_ASSERT_RETURN(Future<int64_t>(), internal::IsInitialized());
+Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE> GetSessionId() {
+  FIREBASE_ASSERT_RETURN(Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE>(),
+                         internal::IsInitialized());
   auto* api = internal::FutureData::Get()->api();
-  const auto future_handle =
-      api->SafeAlloc<int64_t>(internal::kAnalyticsFnGetSessionId);
+  const auto future_handle = api->SafeAlloc<FIREBASE_ANALYTICS_SESSION_ID_TYPE>(
+      internal::kAnalyticsFnGetSessionId);
   JNIEnv* env = g_app->GetJNIEnv();
   jobject task =
       env->CallObjectMethod(g_analytics_class_instance,
@@ -397,7 +398,7 @@ Future<int64_t> GetSessionId() {
         env, task,
         [](JNIEnv* env, jobject result, util::FutureResult result_code,
            const char* status_message, void* callback_data) {
-          int64_t session_id = 0;
+          FIREBASE_ANALYTICS_SESSION_ID_TYPE session_id = 0;
           if (result != nullptr) {
             // result is a Long class type, unbox it.
             session_id = util::JLongToInt64(env, result);
@@ -421,17 +422,19 @@ Future<int64_t> GetSessionId() {
         reinterpret_cast<void*>(future_handle.get().id()),
         internal::kAnalyticsModuleName);
   } else {
-    api->CompleteWithResult(future_handle.get(), -1, error.c_str(),
-                            static_cast<int64_t>(0L));
+    api->CompleteWithResult(
+        future_handle.get(), -1, error.c_str(),
+        static_cast<FIREBASE_ANALYTICS_SESSION_ID_TYPE>(0L));
   }
   env->DeleteLocalRef(task);
 
-  return Future<int64_t>(api, future_handle.get());
+  return Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE>(api, future_handle.get());
 }
 
-Future<int64_t> GetSessionIdLastResult() {
-  FIREBASE_ASSERT_RETURN(Future<int64_t>(), internal::IsInitialized());
-  return static_cast<const Future<int64_t>&>(
+Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE> GetSessionIdLastResult() {
+  FIREBASE_ASSERT_RETURN(Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE>(),
+                         internal::IsInitialized());
+  return static_cast<const Future<FIREBASE_ANALYTICS_SESSION_ID_TYPE>&>(
       internal::FutureData::Get()->api()->LastResult(
           internal::kAnalyticsFnGetSessionId));
 }
