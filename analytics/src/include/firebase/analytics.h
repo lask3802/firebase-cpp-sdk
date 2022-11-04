@@ -530,6 +530,8 @@ Future<std::string> GetAnalyticsInstanceIdLastResult();
 #if !defined(SWIG)
 #define FIREBASE_ANALYTICS_SESSION_ID_TYPE int64_t
 #else  // SWIG
+// For Unity builds, ensure that the long type can hold 64 bits.
+static_assert(sizeof(long) >= 8);
 #define FIREBASE_ANALYTICS_SESSION_ID_TYPE long
 #endif
 
