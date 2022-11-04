@@ -530,7 +530,7 @@ Future<std::string> GetAnalyticsInstanceIdLastResult();
 #if !defined(SWIG)
 #define FIREBASE_ANALYTICS_SESSION_ID_TYPE int64_t
 #else  // SWIG
-#define FIREBASE_ANALYTICS_SESSION_ID_TYPE long long
+#define FIREBASE_ANALYTICS_SESSION_ID_TYPE long
 #endif
 
 /// Asynchronously retrieves the identifier of the current app
