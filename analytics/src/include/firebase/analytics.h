@@ -527,7 +527,7 @@ Future<std::string> GetAnalyticsInstanceId();
 /// @returns Object which can be used to retrieve the analytics instance ID.
 Future<std::string> GetAnalyticsInstanceIdLastResult();
 
-#ifndef SWIG
+#if !defined(SWIG)
 #define FIREBASE_ANALYTICS_SESSION_ID_TYPE int64_t
 #else  // SWIG
 #define FIREBASE_ANALYTICS_SESSION_ID_TYPE long long
