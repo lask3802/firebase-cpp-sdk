@@ -350,7 +350,7 @@ static void CompletePermissionFuture(::firebase::messaging::Error error) {
 static void AppDelegateApplicationDidRegisterForRemoteNotificationsWithDeviceToken(
     id self, SEL selector_value, UIApplication *application, NSData *deviceToken) {
   ::firebase::LogDebug("FCM: Registered for remote notifications with device token");
-  [[FIRMessaging messaging].APNSToken = deviceToken;
+  [FIRMessaging messaging].APNSToken = deviceToken;
   CompletePermissionFuture(::firebase::messaging::kErrorNone);
   IMP app_delegate_application_did_register_for_remote_notifications_with_device_token =
       SwizzledMethodCache().GetMethodForObject(
