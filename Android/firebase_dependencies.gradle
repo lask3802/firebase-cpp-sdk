@@ -51,7 +51,6 @@ def firebaseResourceDependenciesMap = [
   'database' : [':database:database_resources'],
   'firestore' : [':firestore:firestore_resources'],
   'gma' : [':gma:gma_resources'],
-  'remote_config' : [':remote_config:remote_config_resources'],
   'storage' : [':storage:storage_resources']
 ]
 
