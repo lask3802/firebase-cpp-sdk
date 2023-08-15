@@ -94,6 +94,10 @@ class Response : public Transfer {
   // is found in the header, return nullptr.
   const char* GetHeader(const char* name);
 
+  // TODO - remove this or generalize this to getheaderkeys? added by almostmatt for debugging.
+  // currently this just copies the whole map
+  const std::map<std::string, std::string> GetHeaderMap();
+
   // Get the body. If no body line has been received yet, return empty string.
   const char* GetBody() const;
 

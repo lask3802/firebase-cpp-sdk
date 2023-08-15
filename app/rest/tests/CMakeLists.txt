@@ -93,6 +93,13 @@ firebase_cpp_cc_test(firebase_app_rest_response_json_test
     sample_resource_lib
 )
 
+firebase_cpp_cc_test(firebase_app_rest_response_stream_test
+  SOURCES
+    response_stream_test.cc
+  DEPENDS
+    firebase_rest_lib
+)
+
 firebase_cpp_cc_test(firebase_app_rest_util_test
   SOURCES
     util_test.cc

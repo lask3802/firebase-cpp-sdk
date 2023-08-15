@@ -77,6 +77,10 @@ const char* Response::GetHeader(const char* name) {
   }
 }
 
+const std::map<std::string, std::string> Response::GetHeaderMap() {
+  return header_;
+}
+
 const char* Response::GetBody() const {
   // If already concatenated before, return it.
   if (!body_cache_.empty()) {
