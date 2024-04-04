@@ -369,7 +369,7 @@ def _build_ios_helper(helper_project, device_name, device_os):
   for file_dir, _, file_names in os.walk(output_path):
     for file_name in file_names:
       all_files_list.append(file_name)
-      if file_name.endswith(".xctestrun") and "iphonesimulator" in file_name:
+      if file_name.endswith(".xctestrun"): # and "iphonesimulator" in file_name:
         return os.path.join(file_dir, file_name)
   logging.error("Couldn't find helper app in file list: %s", "\n".join(all_files_list))
 
