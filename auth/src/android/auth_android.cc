@@ -637,6 +637,6 @@ void EnableTokenAutoRefresh(AuthData* auth_data) {}
 void DisableTokenAutoRefresh(AuthData* auth_data) {}
 void InitializeTokenRefresher(AuthData* auth_data) {}
 void DestroyTokenRefresher(AuthData* auth_data) {}
-
+void ResetTokenRefreshCounter(AuthData* auth_data){}
 }  // namespace auth
 }  // namespace firebase

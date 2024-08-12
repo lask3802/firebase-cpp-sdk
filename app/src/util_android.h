@@ -491,13 +491,14 @@ METHOD_LOOKUP_DECLARATION(activity, ACTIVITY_METHODS)
 // Used to setup the cache of Bundle class method IDs to reduce time spent
 // looking up methods by string.
 // clang-format off
-#define BUNDLE_METHODS(X)                                                \
-    X(Constructor, "<init>", "()V"),                                     \
-    X(GetString, "getString", "(Ljava/lang/String;)Ljava/lang/String;"), \
-    X(KeySet, "keySet", "()Ljava/util/Set;"),                            \
-    X(PutFloat, "putFloat", "(Ljava/lang/String;F)V"),                   \
-    X(PutLong, "putLong", "(Ljava/lang/String;J)V"),                     \
-    X(PutString, "putString", "(Ljava/lang/String;Ljava/lang/String;)V")
+#define BUNDLE_METHODS(X)                                                 \
+    X(Constructor, "<init>", "()V"),                                      \
+    X(GetString, "getString", "(Ljava/lang/String;)Ljava/lang/String;"),  \
+    X(KeySet, "keySet", "()Ljava/util/Set;"),                             \
+    X(PutFloat, "putFloat", "(Ljava/lang/String;F)V"),                    \
+    X(PutLong, "putLong", "(Ljava/lang/String;J)V"),                      \
+    X(PutString, "putString", "(Ljava/lang/String;Ljava/lang/String;)V"), \
+    X(PutBundle, "putBundle", "(Ljava/lang/String;Landroid/os/Bundle;)V")
 // clang-format on
 METHOD_LOOKUP_DECLARATION(bundle, BUNDLE_METHODS)
 
@@ -567,6 +568,10 @@ METHOD_LOOKUP_DECLARATION(intent, INTENT_METHODS);
   X(ConstructorFilePath, "<init>", "(Ljava/io/File;Ljava/lang/String;)V"), \
   X(GetAbsolutePath, "getAbsolutePath", "()Ljava/lang/String;"),           \
   X(GetPath, "getPath", "()Ljava/lang/String;"),                           \
+  X(Exists, "exists", "()Z"),                                              \
+  X(Delete, "delete", "()Z"),                                              \
+  X(SetReadOnly, "setReadOnly", "()Z"),                                    \
+  X(SetWritable, "setWritable", "(Z)Z"),                                   \
   X(ToUri, "toURI", "()Ljava/net/URI;")
 // clang-format on
 METHOD_LOOKUP_DECLARATION(file, FILE_METHODS)
@@ -614,8 +619,7 @@ METHOD_LOOKUP_DECLARATION(double_class, DOUBLE_METHODS);
   X(Equals, "equals",               \
     "(Ljava/lang/Object;)Z"),       \
   X(Name, "name",                   \
-    "()Ljava/lang/String;")         \
-// clang-format on
+    "()Ljava/lang/String;")  // clang-format on
 METHOD_LOOKUP_DECLARATION(enum_class, ENUM_METHODS);
 
 // clang-format off
@@ -756,8 +760,8 @@ class JavaThreadContext {
   // A typical usage pattern is:
   //
   // util::RunOnBackgroundThread(env, [](void* function_data) {
-  //     SharedPtr<JavaThreadContext> context =
-  //       *(static_cast<SharedPtr<JavaThreadContext>*>(function_data));
+  //     std::shared_ptr<JavaThreadContext> context =
+  //       *(static_cast<std::shared_ptr<JavaThreadContext>*>(function_data));
   //     context->ReleaseExecuteCancelLock();
   //     // Perform a slow operation.
   //     if (context->AcquireExecuteCancelLock()) {
